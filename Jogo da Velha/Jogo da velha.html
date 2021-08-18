@@ -1,0 +1,134 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <title>Jogo da velha</title>
+    <style type="text/css">
+        #turno {
+            margin: auto;
+            margin-top: 40px;
+            width: 255px;
+            height: 80px;
+        }
+
+        .casa {
+            width: 80px;
+            height: 60px;
+            border: 2.5px solid #000;
+            float: left;
+            text-align: center;
+            padding-top: 15px;
+        }
+
+        .jogo {
+            width: 255px;
+            height: 255px;
+            margin: auto;
+        }
+    </style>
+</head>
+
+<body>
+    <div id="turno">
+        <p style="float: left">Turno do jogador:</p>
+        <img src="" height="50">
+
+    </div>
+    <div class="jogo">
+        <div id="a1" class="casa" jogada=""></div>
+        <div id="a2" class="casa" jogada=""></div>
+        <div id="a3" class="casa" jogada=""></div>
+
+
+        <div id="b1" class="casa" jogada=""></div>
+        <div id="b2" class="casa" jogada=""></div>
+        <div id="b3" class="casa" jogada=""></div>
+
+
+        <div id="c1" class="casa" jogada=""></div>
+        <div id="c2" class="casa" jogada=""></div>
+        <div id="c3" class="casa" jogada=""></div>
+    </div>
+    <script>
+        const player1 = " Jogador 1";
+        const player2 = " Jogador 2";
+        var Turno = player1;
+        var Fim = false;
+
+        atualizaTurno();
+        DeterminaJogada();
+
+        function atualizaTurno() {
+            if (Fim) {
+                return;
+            }
+            if (Turno == player1) {
+                var player = document.querySelectorAll("div#turno img")[0];
+                player.setAttribute("src", "imagens/X.png");
+
+            }
+            else {
+                var player = document.querySelectorAll("div#turno img")[0];
+                player.setAttribute("src", "imagens/o.png");
+            }
+        }
+
+        function DeterminaJogada() {
+            var espacos = document.getElementsByClassName("casa");
+            for (var i = 0; i < espacos.length; i++) {
+                espacos[i].addEventListener("click", function () {
+                    if (Fim) {
+                        return;
+                    }
+                    if (this.getElementsByTagName("img".length == 0)) {
+                        if (Turno == player1) {
+                            this.innerHTML = "<img src='imagens/X.png'>";
+                            this.setAttribute("jogada", player1);
+                            Turno = player2;
+                        } else {
+                            this.innerHTML = "<img src='imagens/o.png'>";
+                            this.setAttribute("jogada", player2);
+                            Turno = player1;
+                        }
+                        atualizaTurno();
+                        FinalizaPartida();
+                    }
+                });
+            }
+
+
+
+        }
+        function FinalizaPartida() {
+            var a1 = document.getElementById("a1").getAttribute("jogada");
+            var a2 = document.getElementById("a2").getAttribute("jogada");
+            var a3 = document.getElementById("a3").getAttribute("jogada");
+
+            var b1 = document.getElementById("b1").getAttribute("jogada");
+            var b2 = document.getElementById("b2").getAttribute("jogada");
+            var b3 = document.getElementById("b3").getAttribute("jogada");
+
+            var c1 = document.getElementById("c1").getAttribute("jogada");
+            var c2 = document.getElementById("c2").getAttribute("jogada");
+            var c3 = document.getElementById("c3").getAttribute("jogada");
+
+            var winner = "";
+
+            if ((a1 == b1 && a1 == c1 && a1 != "") || (a1 == a2 && a1 == a3 && a1 != "") || (a1 == b2 && a1 == c3 && a1 != "")) {
+                winner = a1;
+            } else if ((b2 == b1 && b2 == b3 && b2 != "") || (b2 == a2 && b2 == c2 && b2 != "") || (b2 == a3 && b2 == c1 && b2 != "")) {
+                winner = b2;
+            } else if ((c3 == c2 && c3 == c1 && c3 != "") || (c3 == a3 && c3 == b3 && c3 != "")) {
+                winner = c3;
+            }
+            if (winner != "") {
+                alert("O vencedor foi:'" + winner + "'");
+                Fim = true;
+
+            }
+
+        }
+    </script>
+</body>
+
+</html>
